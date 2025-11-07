@@ -1,1 +1,321 @@
-<h1> Habibi</h1>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Habib's Website is Coming soon hurry</title>
+  <style>
+    :root{
+      --bg1: #0f172a;
+      --bg2: #0b1220;
+      --accent: #7c3aed;
+      --accent2: #06b6d4;
+      --card: rgba(255,255,255,0.05);
+      --glass: rgba(255,255,255,0.03);
+      --radius: 16px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color-scheme: dark;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0}
+    body{
+      display:grid;
+      place-items:center;
+      background: radial-gradient(1000px 600px at 10% 20%, rgba(124,58,237,0.14), transparent),
+                  radial-gradient(800px 500px at 90% 80%, rgba(6,182,212,0.08), transparent),
+                  linear-gradient(180deg,var(--bg1),var(--bg2));
+      color: #e6eef8;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:24px;
+    }
+
+    .card{
+      width: min(920px, 96vw);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: 0 10px 40px rgba(2,6,23,0.6);
+      border: 1px solid rgba(255,255,255,0.03);
+      text-align:center;
+    }
+
+    h1{
+      margin: 0 0 8px 0;
+      font-size: clamp(20px, 3.8vw, 36px);
+      letter-spacing: -0.5px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+    }
+
+    .subtitle{
+      margin: 0 0 18px 0;
+      color: rgba(230,238,248,0.8);
+      font-size: 14px;
+    }
+
+    .countdown{
+      display:flex;
+      gap: 12px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin: 18px 0 8px;
+    }
+
+    .timebox{
+      min-width: 96px;
+      padding: 14px 12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.03);
+      box-shadow: 0 8px 24px rgba(2,6,23,0.5);
+    }
+    .num{
+      font-size: clamp(20px, 4vw, 32px);
+      font-weight:700;
+      color: white;
+    }
+    .label{
+      margin-top:6px;
+      font-size:12px;
+      color: rgba(230,238,248,0.75);
+      text-transform: uppercase;
+      letter-spacing: 0.9px;
+    }
+
+    .note{
+      margin-top:18px;
+      font-size:13px;
+      color: rgba(230,238,248,0.8);
+    }
+
+    .launch{
+      margin-top:18px;
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      padding:10px 16px;
+      border-radius: 10px;
+      background: linear-gradient(90deg,var(--accent),var(--accent2));
+      color:white;
+      font-weight:700;
+      text-decoration:none;
+      box-shadow: 0 8px 30px rgba(124,58,237,0.18);
+    }
+
+    /* celebration message */
+    .done {
+      display:none;
+      margin-top:18px;
+      color: #0b1220;
+      background: linear-gradient(90deg,var(--accent2),var(--accent));
+      padding:12px 18px;
+      border-radius:10px;
+      font-weight:700;
+      box-shadow: 0 10px 30px rgba(6,182,212,0.12);
+    }
+
+    /* small screens */
+    @media (max-width:520px){
+      .timebox { min-width:72px; padding:12px 10px }
+    }
+
+    /* simple confetti pieces (will be toggled by JS) */
+    .confetti {
+      position: fixed;
+      pointer-events:none;
+      top:0;left:0;right:0;bottom:0;
+      overflow:visible;
+      z-index: 9999;
+    }
+    .confetti span{
+      position:absolute;
+      width:10px;height:16px;
+      opacity:0.95;
+      transform-origin:center;
+      border-radius:2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card" role="region" aria-label="Countdown to Habib's website">
+    <h1>🚧 Habib's Website is Coming</h1>
+    <p class="subtitle" id="targetText">Launching soon — countdown in progress.</p>
+
+    <div class="countdown" aria-live="polite" aria-atomic="true">
+      <div class="timebox" aria-hidden="false">
+        <div class="num" id="days">0</div>
+        <div class="label">Days</div>
+      </div>
+      <div class="timebox">
+        <div class="num" id="hours">0</div>
+        <div class="label">Hours</div>
+      </div>
+      <div class="timebox">
+        <div class="num" id="minutes">0</div>
+        <div class="label">Minutes</div>
+      </div>
+      <div class="timebox">
+        <div class="num" id="seconds">0</div>
+        <div class="label">Seconds</div>
+      </div>
+    </div>
+
+    <div class="note">Set your launch date below (local time).</div>
+
+    <div style="margin-top:12px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+      <input id="dateInput" type="datetime-local" style="padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06); background:transparent; color:inherit;" />
+      <button id="setBtn" style="padding:8px 12px;border-radius:8px;border:none;background:transparent;color:var(--accent);font-weight:700;cursor:pointer">Set Launch</button>
+      <a class="launch" id="visitLink" href="#" style="display:none" target="_blank" rel="noopener">Visit site</a>
+    </div>
+
+    <div class="done" id="doneMsg" role="status">🎉 Habib's website is live — welcome! 🎉</div>
+  </div>
+
+  <div class="confetti" id="confetti"></div>
+
+  <script>
+    // ======= CONFIG =======
+    // Default target date (change here): YYYY, M-1, D, H, M, S (month is 0-based if using Date())
+    // We'll use a default 7 days from now as an example:
+    let defaultTarget = new Date();
+    defaultTarget.setDate(defaultTarget.getDate() + 7); // change this default as you like
+
+    // If you'd prefer a fixed date, replace above with:
+    // let defaultTarget = new Date('2025-12-01T10:00:00');
+
+    // ======= End config =======
+
+    const daysEl = document.getElementById('days');
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+    const targetText = document.getElementById('targetText');
+    const dateInput = document.getElementById('dateInput');
+    const setBtn = document.getElementById('setBtn');
+    const doneMsg = document.getElementById('doneMsg');
+    const visitLink = document.getElementById('visitLink');
+    const confettiRoot = document.getElementById('confetti');
+
+    // Initialize input to default target in local datetime-local format
+    function toDatetimeLocal(date) {
+      const pad = n => String(n).padStart(2,'0');
+      return date.getFullYear() + '-' + pad(date.getMonth()+1) + '-' + pad(date.getDate()) + 'T' + pad(date.getHours()) + ':' + pad(date.getMinutes());
+    }
+    dateInput.value = toDatetimeLocal(defaultTarget);
+
+    let targetDate = new Date(dateInput.value);
+
+    function updateTargetText() {
+      if (isFinite(targetDate)) {
+        targetText.textContent = 'Launch date: ' + targetDate.toLocaleString();
+      } else {
+        targetText.textContent = 'Please set a valid launch date.';
+      }
+    }
+    updateTargetText();
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = targetDate - now;
+      if (diff <= 0) {
+        daysEl.textContent = '0';
+        hoursEl.textContent = '0';
+        minutesEl.textContent = '0';
+        secondsEl.textContent = '0';
+        showLaunched();
+        return;
+      }
+      const secs = Math.floor(diff / 1000);
+      const days = Math.floor(secs / (24*3600));
+      const hours = Math.floor((secs % (24*3600)) / 3600);
+      const minutes = Math.floor((secs % 3600) / 60);
+      const seconds = Math.floor(secs % 60);
+
+      daysEl.textContent = String(days);
+      hoursEl.textContent = String(hours).padStart(2,'0');
+      minutesEl.textContent = String(minutes).padStart(2,'0');
+      secondsEl.textContent = String(seconds).padStart(2,'0');
+    }
+
+    let timer = setInterval(updateCountdown, 250);
+    updateCountdown();
+
+    setBtn.addEventListener('click', () => {
+      const val = dateInput.value;
+      const d = new Date(val);
+      if (!isFinite(d)) {
+        alert('Please enter a valid date and time.');
+        return;
+      }
+      targetDate = d;
+      updateTargetText();
+      doneMsg.style.display = 'none';
+      visitLink.style.display = 'none';
+    });
+
+    // Show launched state
+    function showLaunched(){
+      doneMsg.style.display = 'inline-block';
+      visitLink.style.display = 'inline-flex';
+      visitLink.href = '#'; // set to actual site url if available
+      // stop timer
+      clearInterval(timer);
+      // small celebration
+      confettiBurst();
+    }
+
+    // Confetti generator (simple)
+    function confettiBurst(){
+      const colors = ['#7c3aed','#06b6d4','#f97316','#f43f5e','#34d399','#f59e0b'];
+      const pieces = 48;
+      confettiRoot.innerHTML = '';
+      for(let i=0;i<pieces;i++){
+        const el = document.createElement('span');
+        el.style.background = colors[Math.floor(Math.random()*colors.length)];
+        el.style.left = (Math.random()*100) + 'vw';
+        el.style.top = (-10 - Math.random()*20) + 'vh';
+        el.style.width = (6 + Math.random()*10) + 'px';
+        el.style.height = (10 + Math.random()*16) + 'px';
+        el.style.transform = 'rotate(' + (Math.random()*360) + 'deg)';
+        el.style.opacity = 0.95;
+        confettiRoot.appendChild(el);
+        animateConfetti(el);
+      }
+      // remove after 6s
+      setTimeout(()=> confettiRoot.innerHTML = '', 6000);
+    }
+
+    function animateConfetti(el){
+      const duration = 3500 + Math.random()*2000;
+      const endX = (Math.random()-0.5) * 80; // vw offset
+      const endY = 120 + Math.random()*80; // vh
+      const rotate = (Math.random()*720) - 360;
+      el.animate([
+        { transform: 'translateY(0) rotate(0deg)', opacity:1 },
+        { transform: `translate(${endX}vw, ${endY}vh) rotate(${rotate}deg)`, opacity:0.8 }
+      ], {
+        duration: duration,
+        easing: 'cubic-bezier(.2,.7,.2,1)'
+      });
+    }
+
+    // Accessibility: announce when countdown reaches zero
+    const obs = new MutationObserver((m)=> {
+      for(const rec of m){
+        if (rec.target === doneMsg && doneMsg.style.display !== 'none') {
+          doneMsg.setAttribute('aria-live','assertive');
+        }
+      }
+    });
+    obs.observe(doneMsg, {attributes:true, attributeFilter:['style']});
+
+    // If the page loads and target already passed, show launched immediately
+    if (targetDate - new Date() <= 0) {
+      showLaunched();
+    }
+  </script>
+</body>
+</html>
